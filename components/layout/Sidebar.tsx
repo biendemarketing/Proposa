@@ -5,7 +5,7 @@ import { NAVIGATION_ITEMS, SETTINGS_ITEM } from '../../constants';
 import Icon from '../icons/Icon';
 
 const Sidebar: React.FC = () => {
-    const { view, navigate, isSidebarOpen } = useAppContext();
+    const { view, navigate, isSidebarOpen, user } = useAppContext();
 
     const NavItem: React.FC<{ item: { view: string; label: string; icon: string; } }> = ({ item }) => {
         const isActive = view === item.view;
@@ -31,7 +31,7 @@ const Sidebar: React.FC = () => {
     };
 
     return (
-        <aside className={`w-64 bg-white text-slate-800 flex-col p-4 border-r border-slate-200 transform transition-transform duration-300 ease-in-out z-40
+        <aside className={`w-64 bg-white text-slate-800 flex flex-col p-4 border-r border-slate-200 transform transition-transform duration-300 ease-in-out z-40
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
             lg:translate-x-0 lg:flex lg:static fixed inset-y-0 left-0`}>
             <div className="flex items-center mb-6 pl-2">
@@ -49,10 +49,25 @@ const Sidebar: React.FC = () => {
                 </ul>
             </nav>
             
-            <div>
+            <div className="border-t pt-2">
                  <ul>
                     <NavItem item={SETTINGS_ITEM} />
                 </ul>
+                {user && (
+                    <div className="mt-4 p-3 bg-slate-50 rounded-lg">
+                        <div className="flex items-center">
+                            <img
+                                className="w-9 h-9 rounded-full"
+                                src={`https://ui-avatars.com/api/?name=${user.name}&background=random`}
+                                alt="User Avatar"
+                            />
+                            <div className="ml-3">
+                                <p className="text-sm font-semibold text-slate-800 truncate">{user.name}</p>
+                                <p className="text-xs text-slate-500 truncate">{user.email}</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </aside>
     );

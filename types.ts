@@ -15,6 +15,15 @@ export enum AppView {
     SETTINGS = 'SETTINGS',
     MEMBERS = 'MEMBERS',
     NOTIFICATIONS = 'NOTIFICATIONS',
+    LANDING = 'LANDING',
+    LOGIN = 'LOGIN',
+    REGISTER = 'REGISTER',
+}
+
+export interface User {
+    id: number;
+    name: string;
+    email: string;
 }
 
 export enum ProposalStatus {

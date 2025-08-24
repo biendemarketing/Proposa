@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useAppContext } from '../../contexts/AppContext';
-import { AppView, Proposal, Client } from '../../types';
+import { AppView } from '../../types';
 import Icon from '../icons/Icon';
 import { NAVIGATION_ITEMS, SETTINGS_ITEM } from '../../constants';
 import { mockProposals, mockNotifications } from '../../data/mockData';
@@ -99,7 +99,7 @@ const SearchModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
 
 const Header: React.FC = () => {
-    const { view, viewPayload, setSidebarOpen, navigate } = useAppContext();
+    const { view, viewPayload, setSidebarOpen, navigate, logout, user } = useAppContext();
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -185,15 +185,19 @@ const Header: React.FC = () => {
                     <button onClick={() => setIsProfileOpen(prev => !prev)}>
                         <img
                             className="w-9 h-9 rounded-full ring-2 ring-offset-2 ring-transparent group-hover:ring-indigo-500 transition-shadow"
-                            src="https://picsum.photos/seed/user/100/100"
+                            src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`}
                             alt="User Avatar"
                         />
                     </button>
                     {isProfileOpen && (
-                        <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-200 z-30 py-1">
+                        <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-200 z-30 py-1">
+                           <div className="px-4 py-2 border-b">
+                                <p className="text-sm font-semibold text-slate-800 truncate">{user?.name}</p>
+                                <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+                           </div>
                            <a href="#" onClick={(e) => { e.preventDefault(); navigate(AppView.SETTINGS); setIsProfileOpen(false); }} className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Mi Perfil</a>
                            <div className="my-1 h-px bg-slate-200"></div>
-                           <a href="#" onClick={(e) => { e.preventDefault(); alert("Cerrando sesión..."); setIsProfileOpen(false); }} className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                           <a href="#" onClick={(e) => { e.preventDefault(); logout(); setIsProfileOpen(false); }} className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50">
                                 <Icon name="LogOut" className="w-4 h-4 mr-2" />
                                 Cerrar Sesión
                             </a>
