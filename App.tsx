@@ -18,6 +18,7 @@ import Clients from './components/clients/Clients';
 import Analytics from './components/analytics/Analytics';
 import Comments from './components/comments/Comments';
 import Settings from './components/settings/Settings';
+import Notifications from './components/notifications/Notifications';
 
 const MainApp: React.FC = () => {
     const { view, viewPayload, isSidebarOpen, setSidebarOpen } = useAppContext();
@@ -58,6 +59,8 @@ const MainApp: React.FC = () => {
                 return <Settings />;
             case AppView.MEMBERS:
                  return <Settings initialTab="members" />;
+            case AppView.NOTIFICATIONS:
+                 return <Notifications />;
             default:
                 return <Dashboard />;
         }

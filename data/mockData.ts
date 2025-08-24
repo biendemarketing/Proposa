@@ -1,5 +1,5 @@
 
-import { Proposal, Client, Kpi, RecentActivity, ProposalStatus, BlockType, Template, Theme, ProposalBlock, MediaFile, Comment, TeamMember } from '../types';
+import { Proposal, Client, Kpi, RecentActivity, ProposalStatus, BlockType, Template, Theme, ProposalBlock, MediaFile, Comment, TeamMember, Notification } from '../types';
 
 export const mockClients: Client[] = [
     { id: 1, name: 'John Doe', company: 'Innovate Inc.', email: 'john.doe@innovate.com', phone: '555-1234', notes: 'Lead principal del proyecto de rediseño. Prefiere la comunicación por correo electrónico.' },
@@ -447,11 +447,13 @@ export const mockRecentActivity: RecentActivity[] = [
     { id: 4, type: 'viewed', proposalTitle: 'Campaña de Marketing para Solutions Co.', proposalId: 2, clientName: 'Jane Smith', timestamp: '2023-10-28T11:00:00Z', actionText: 'fue vista' },
 ];
 
-export const mockNotifications = mockRecentActivity.map(activity => ({
+export const mockNotifications: Notification[] = mockRecentActivity.map((activity, index) => ({
     id: activity.id,
+    proposalId: activity.proposalId,
+    type: activity.type,
     text: `La propuesta "${activity.proposalTitle}" ${activity.actionText} por ${activity.clientName}.`,
     time: activity.timestamp,
-    isRead: activity.id % 2 === 0,
+    isRead: index === 3, // Only the oldest notification is read
     icon: activity.type === 'approved' ? 'CheckCircle' : activity.type === 'commented' ? 'MessageSquare' : 'Eye',
     iconColor: activity.type === 'approved' ? 'text-green-500' : activity.type === 'commented' ? 'text-yellow-500' : 'text-purple-500',
 }));

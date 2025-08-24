@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useAppContext } from '../../contexts/AppContext';
 import { AppView, Proposal, Client } from '../../types';
@@ -123,6 +124,7 @@ const Header: React.FC = () => {
         if (view === AppView.TEMPLATE_EDITOR) return viewPayload ? "Editar Plantilla" : "Crear Plantilla";
         if (view === AppView.THEME_EDITOR) return viewPayload ? "Editar Tema" : "Crear Tema";
         if (view === AppView.PROPOSAL_ANALYTICS) return "Analíticas de Propuesta";
+        if (view === AppView.NOTIFICATIONS) return "Notificaciones";
         
         const allNavItems = [...NAVIGATION_ITEMS, SETTINGS_ITEM, { view: AppView.MEMBERS, label: 'Miembros', icon: 'Users' }];
         const navItem = allNavItems.find(item => item.view === view);
@@ -173,7 +175,7 @@ const Header: React.FC = () => {
                                 ))}
                             </ul>
                             <div className="p-2 bg-slate-50 text-center">
-                                <a href="#" className="text-sm font-semibold text-indigo-600 hover:underline">Ver todas</a>
+                                <button onClick={() => { navigate(AppView.NOTIFICATIONS); setIsNotificationsOpen(false); }} className="text-sm font-semibold text-indigo-600 hover:underline w-full">Ver todas</button>
                             </div>
                         </div>
                     )}

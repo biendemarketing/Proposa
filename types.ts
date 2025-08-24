@@ -14,6 +14,7 @@ export enum AppView {
     ANALYTICS = 'ANALYTICS',
     SETTINGS = 'SETTINGS',
     MEMBERS = 'MEMBERS',
+    NOTIFICATIONS = 'NOTIFICATIONS',
 }
 
 export enum ProposalStatus {
@@ -300,4 +301,15 @@ export interface RecentActivity {
     clientName: string;
     timestamp: string; // ISO date string
     actionText: string;
+}
+
+export interface Notification {
+    id: number;
+    proposalId: number;
+    type: 'viewed' | 'commented' | 'approved';
+    text: string;
+    time: string;
+    isRead: boolean;
+    icon: string;
+    iconColor: string;
 }
