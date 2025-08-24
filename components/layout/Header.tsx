@@ -3,7 +3,7 @@ import { useAppContext } from '../../contexts/AppContext';
 import { AppView, Proposal, Client } from '../../types';
 import Icon from '../icons/Icon';
 import { NAVIGATION_ITEMS, SETTINGS_ITEM } from '../../constants';
-import { mockProposals, mockClients, mockNotifications } from '../../data/mockData';
+import { mockProposals, mockNotifications } from '../../data/mockData';
 
 const timeSince = (dateString: string) => {
     const seconds = Math.floor((new Date().getTime() - new Date(dateString).getTime()) / 1000);
@@ -21,7 +21,7 @@ const timeSince = (dateString: string) => {
 };
 
 const SearchModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-    const { navigate } = useAppContext();
+    const { navigate, clients } = useAppContext();
     const [query, setQuery] = useState('');
 
     const filteredProposals = useMemo(() =>
@@ -33,9 +33,9 @@ const SearchModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
     const filteredClients = useMemo(() =>
         query.length > 1
-            ? mockClients.filter(c => c.name.toLowerCase().includes(query.toLowerCase()) || c.company.toLowerCase().includes(query.toLowerCase()))
+            ? clients.filter(c => c.name.toLowerCase().includes(query.toLowerCase()) || c.company.toLowerCase().includes(query.toLowerCase()))
             : [],
-        [query]
+        [query, clients]
     );
 
     const handleNavigate = (view: AppView, payload?: any) => {

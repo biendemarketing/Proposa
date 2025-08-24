@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
-import { mockProposals, mockClients, mockThemes } from '../../data/mockData';
+import { mockProposals, mockThemes } from '../../data/mockData';
 import { Proposal, BlockType, TwoColumnItem, FeatureItem, TextWithImageItem, IncludedItem, IconCardItem, ProductCategoryItem, PromoBannerItem, DarkFooterItem, PortfolioItem, PriceTablePackage } from '../../types';
 import Icon from '../icons/Icon';
 import ApprovalModal from './ApprovalModal';
+import { useAppContext } from '../../contexts/AppContext';
 
 interface PublicProposalViewProps {
     token?: string;
@@ -11,6 +11,7 @@ interface PublicProposalViewProps {
 }
 
 const PublicProposalView: React.FC<PublicProposalViewProps> = ({ token, proposal: proposalProp }) => {
+    const { clients } = useAppContext();
     const [proposal] = useState<Proposal | undefined>(
         proposalProp || mockProposals.find(p => p.publicLink === token)
     );
@@ -44,7 +45,7 @@ const PublicProposalView: React.FC<PublicProposalViewProps> = ({ token, proposal
         );
     }
 
-    const clientName = mockClients.find(c => c.id === proposal.clientId)?.company || "Valioso Cliente";
+    const clientName = clients.find(c => c.id === proposal.clientId)?.company || "Valioso Cliente";
 
     const renderBlock = (block: any) => {
         switch (block.type) {

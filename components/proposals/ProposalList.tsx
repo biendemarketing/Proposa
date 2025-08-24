@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { mockProposals, mockClients } from '../../data/mockData';
+import { mockProposals } from '../../data/mockData';
 import { Proposal, ProposalStatus, AppView } from '../../types';
 import { PROPOSAL_STATUS_COLORS } from '../../constants';
 import Badge from '../ui/Badge';
@@ -8,7 +8,7 @@ import Icon from '../icons/Icon';
 import { useAppContext } from '../../contexts/AppContext';
 
 const ProposalList: React.FC = () => {
-    const { navigate } = useAppContext();
+    const { navigate, clients } = useAppContext();
     const [proposals, setProposals] = useState<Proposal[]>(mockProposals);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState<ProposalStatus | 'all'>('all');
@@ -20,7 +20,7 @@ const ProposalList: React.FC = () => {
     }, [proposals, searchTerm, statusFilter]);
 
     const getClientName = (clientId: number) => {
-        return mockClients.find(c => c.id === clientId)?.company || 'Cliente Desconocido';
+        return clients.find(c => c.id === clientId)?.company || 'Cliente Desconocido';
     };
 
     const formatCurrency = (value: number, currency: string) => {

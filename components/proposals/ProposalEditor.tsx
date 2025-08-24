@@ -271,14 +271,14 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
         switch (block.type) {
              case BlockType.COVER:
                 return <BlockEditorWrapper title="Portada" blockId={block.id} onDelete={deleteBlock}>
-                    <EditorInput label="Super Título" value={block.content.superTitle!} onChange={e => updateBlockContent(block.id, { superTitle: e.target.value })} />
-                    <EditorInput label="Título Principal" value={block.content.text!} onChange={e => updateBlockContent(block.id, { text: e.target.value })} />
-                    <EditorTextarea label="Subtítulo / Descripción" value={block.content.subTitle!} onChange={e => updateBlockContent(block.id, { subTitle: e.target.value })} />
-                    <EditorInput label="URL de Imagen de Fondo" value={block.content.imageUrl!} onChange={e => updateBlockContent(block.id, { imageUrl: e.target.value })} />
+                    <EditorInput label="Super Título" value={block.content.superTitle || ''} onChange={e => updateBlockContent(block.id, { superTitle: e.target.value })} />
+                    <EditorInput label="Título Principal" value={block.content.text || ''} onChange={e => updateBlockContent(block.id, { text: e.target.value })} />
+                    <EditorTextarea label="Subtítulo / Descripción" value={block.content.subTitle || ''} onChange={e => updateBlockContent(block.id, { subTitle: e.target.value })} />
+                    <EditorInput label="URL de Imagen de Fondo" value={block.content.imageUrl || ''} onChange={e => updateBlockContent(block.id, { imageUrl: e.target.value })} />
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                        <EditorInput label="Cliente" value={block.content.client!} onChange={e => updateBlockContent(block.id, { client: e.target.value })} />
-                        <EditorInput label="Actividad" value={block.content.activity!} onChange={e => updateBlockContent(block.id, { activity: e.target.value })} />
-                        <EditorInput label="Tema" value={block.content.theme!} onChange={e => updateBlockContent(block.id, { theme: e.target.value })} />
+                        <EditorInput label="Cliente" value={block.content.client || ''} onChange={e => updateBlockContent(block.id, { client: e.target.value })} />
+                        <EditorInput label="Actividad" value={block.content.activity || ''} onChange={e => updateBlockContent(block.id, { activity: e.target.value })} />
+                        <EditorInput label="Tema" value={block.content.theme || ''} onChange={e => updateBlockContent(block.id, { theme: e.target.value })} />
                     </div>
                 </BlockEditorWrapper>;
             case BlockType.SECTION_HEADER:
@@ -289,7 +289,7 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
                  </BlockEditorWrapper>;
             case BlockType.IMAGE:
                 return <BlockEditorWrapper title="Imagen" blockId={block.id} onDelete={deleteBlock}>
-                    <EditorInput label="URL de Imagen" value={block.content.imageUrl!} onChange={e => updateBlockContent(block.id, { imageUrl: e.target.value })} />
+                    <EditorInput label="URL de Imagen" value={block.content.imageUrl || ''} onChange={e => updateBlockContent(block.id, { imageUrl: e.target.value })} />
                 </BlockEditorWrapper>;
              case BlockType.TWO_COLUMN_IMAGE_TEXT: {
                 const columns = block.content.columns || [];
@@ -387,13 +387,13 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
                 
                 return <BlockEditorWrapper title="Items Incluidos con Precio" blockId={block.id} onDelete={deleteBlock}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <EditorInput label="Título del Precio" value={block.content.priceTitle!} onChange={e => updateBlockContent(block.id, { priceTitle: e.target.value })} />
+                        <EditorInput label="Título del Precio" value={block.content.priceTitle || ''} onChange={e => updateBlockContent(block.id, { priceTitle: e.target.value })} />
                         <div>
                             <label className="block text-xs font-medium text-slate-600 mb-1">Precio</label>
                             <input type="number" value={block.content.price || 0} onChange={e => updateBlockContent(block.id, { price: parseFloat(e.target.value) })} className="w-full text-sm p-2 border border-slate-300 rounded-md focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-slate-800" />
                         </div>
                     </div>
-                    <EditorTextarea label="Subtítulo del Precio" value={block.content.priceSubtitle!} onChange={e => updateBlockContent(block.id, { priceSubtitle: e.target.value })} rows={2}/>
+                    <EditorTextarea label="Subtítulo del Precio" value={block.content.priceSubtitle || ''} onChange={e => updateBlockContent(block.id, { priceSubtitle: e.target.value })} rows={2}/>
 
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mt-3 mb-2">Items Incluidos</label>
@@ -419,10 +419,10 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
             }
              case BlockType.FOOTER:
                 return <BlockEditorWrapper title="Pie de Página" blockId={block.id} onDelete={deleteBlock}>
-                    <EditorInput label="Teléfono" value={block.content.phone!} onChange={e => updateBlockContent(block.id, { phone: e.target.value })} />
-                    <EditorInput label="Email" value={block.content.email!} onChange={e => updateBlockContent(block.id, { email: e.target.value })} />
-                    <EditorInput label="Dirección" value={block.content.address!} onChange={e => updateBlockContent(block.id, { address: e.target.value })} />
-                    <EditorInput label="URL del Logo" value={block.content.logoUrl!} onChange={e => updateBlockContent(block.id, { logoUrl: e.target.value })} />
+                    <EditorInput label="Teléfono" value={block.content.phone || ''} onChange={e => updateBlockContent(block.id, { phone: e.target.value })} />
+                    <EditorInput label="Email" value={block.content.email || ''} onChange={e => updateBlockContent(block.id, { email: e.target.value })} />
+                    <EditorInput label="Dirección" value={block.content.address || ''} onChange={e => updateBlockContent(block.id, { address: e.target.value })} />
+                    <EditorInput label="URL del Logo" value={block.content.logoUrl || ''} onChange={e => updateBlockContent(block.id, { logoUrl: e.target.value })} />
                 </BlockEditorWrapper>;
             case BlockType.FOUR_COLUMN_ICON_CARDS: {
                 const cards = block.content.iconCards || [];
@@ -495,11 +495,11 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
             }
             case BlockType.CALL_TO_ACTION: {
                 return <BlockEditorWrapper title="Llamada a la Acción (CTA)" blockId={block.id} onDelete={deleteBlock}>
-                    <EditorInput label="Título" value={block.content.title!} onChange={e => updateBlockContent(block.id, { title: e.target.value })} />
-                    <EditorTextarea label="Subtítulo" value={block.content.subTitle!} onChange={e => updateBlockContent(block.id, { subTitle: e.target.value })} />
-                    <EditorInput label="Texto del Botón" value={block.content.buttonText!} onChange={e => updateBlockContent(block.id, { buttonText: e.target.value })} />
-                    <EditorInput label="URL del Botón" value={block.content.buttonUrl!} onChange={e => updateBlockContent(block.id, { buttonUrl: e.target.value })} />
-                    <EditorInput label="URL de Imagen de Fondo" value={block.content.imageUrl!} onChange={e => updateBlockContent(block.id, { imageUrl: e.target.value })} />
+                    <EditorInput label="Título" value={block.content.title || ''} onChange={e => updateBlockContent(block.id, { title: e.target.value })} />
+                    <EditorTextarea label="Subtítulo" value={block.content.subTitle || ''} onChange={e => updateBlockContent(block.id, { subTitle: e.target.value })} />
+                    <EditorInput label="Texto del Botón" value={block.content.buttonText || ''} onChange={e => updateBlockContent(block.id, { buttonText: e.target.value })} />
+                    <EditorInput label="URL del Botón" value={block.content.buttonUrl || ''} onChange={e => updateBlockContent(block.id, { buttonUrl: e.target.value })} />
+                    <EditorInput label="URL de Imagen de Fondo" value={block.content.imageUrl || ''} onChange={e => updateBlockContent(block.id, { imageUrl: e.target.value })} />
                 </BlockEditorWrapper>;
             }
              case BlockType.FOOTER_DARK: {
@@ -528,9 +528,9 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
             }
              case BlockType.POST:
                 return <BlockEditorWrapper title="Post / Artículo" blockId={block.id} onDelete={deleteBlock}>
-                    <EditorInput label="Título" value={block.content.title!} onChange={e => updateBlockContent(block.id, { title: e.target.value })} />
-                    <EditorInput label="URL de Imagen Destacada" value={block.content.imageUrl!} onChange={e => updateBlockContent(block.id, { imageUrl: e.target.value })} />
-                    <EditorTextarea label="Cuerpo del Post" value={block.content.body!} onChange={e => updateBlockContent(block.id, { body: e.target.value })} rows={10} />
+                    <EditorInput label="Título" value={block.content.title || ''} onChange={e => updateBlockContent(block.id, { title: e.target.value })} />
+                    <EditorInput label="URL de Imagen Destacada" value={block.content.imageUrl || ''} onChange={e => updateBlockContent(block.id, { imageUrl: e.target.value })} />
+                    <EditorTextarea label="Cuerpo del Post" value={block.content.body || ''} onChange={e => updateBlockContent(block.id, { body: e.target.value })} rows={10} />
                 </BlockEditorWrapper>;
              case BlockType.PORTFOLIO: {
                 const items = block.content.portfolioItems || [];
