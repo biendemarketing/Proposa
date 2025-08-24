@@ -103,7 +103,7 @@ const LandingPage: React.FC = () => {
     return (
         <div className="bg-background text-foreground font-sans antialiased overflow-x-hidden">
              <header className="sticky top-0 bg-background/80 backdrop-blur-lg z-50 border-b border-border">
-                 <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div className="container mx-auto px-6 py-4 flex justify-between items-center">
                     <div className="flex items-center">
                         <div className="bg-indigo-500 p-2 rounded-lg mr-3"><Icon name="FileText" className="w-6 h-6 text-white" /></div>
                         <h1 className="text-xl font-bold tracking-tighter text-foreground">Proposa</h1>
@@ -128,81 +128,91 @@ const LandingPage: React.FC = () => {
                 </div>
             </header>
 
-            <main className="container mx-auto px-6">
+            <main>
                 {/* Hero */}
                 <section className={`text-center py-24 md:py-32 relative hero-light-bg`}>
-                    {theme === 'dark' && (
-                        <div className="absolute inset-0 -z-10 overflow-hidden">
-                            <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-indigo-500/30 rounded-full filter blur-3xl opacity-50 animate-[blob_8s_infinite]"></div>
-                            <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-purple-500/30 rounded-full filter blur-3xl opacity-50 animate-[blob_12s_infinite_4s]"></div>
+                    <div className="container mx-auto px-6">
+                        {theme === 'dark' && (
+                            <div className="absolute inset-0 -z-10 overflow-hidden">
+                                <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-indigo-500/30 rounded-full filter blur-3xl opacity-50 animate-[blob_8s_infinite]"></div>
+                                <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-purple-500/30 rounded-full filter blur-3xl opacity-50 animate-[blob_12s_infinite_4s]"></div>
+                            </div>
+                        )}
+                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground">
+                            {hero.h1_line1} <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">{hero.h1_line2}</span>
+                        </h1>
+                        <p className="max-w-2xl mx-auto mt-6 text-lg text-muted-foreground">{hero.subtitle}</p>
+                        <div className="mt-8 flex justify-center items-center gap-4">
+                            <button onClick={() => navigate(AppView.REGISTER)} className="btn btn-primary px-6 py-3">{hero.ctaPrimary}</button>
+                            <button className="btn btn-secondary px-6 py-3">{hero.ctaSecondary}</button>
                         </div>
-                    )}
-                    <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground">
-                        {hero.h1_line1} <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">{hero.h1_line2}</span>
-                    </h1>
-                    <p className="max-w-2xl mx-auto mt-6 text-lg text-muted-foreground">{hero.subtitle}</p>
-                    <div className="mt-8 flex justify-center items-center gap-4">
-                        <button onClick={() => navigate(AppView.REGISTER)} className="btn btn-primary px-6 py-3">{hero.ctaPrimary}</button>
-                        <button className="btn btn-secondary px-6 py-3">{hero.ctaSecondary}</button>
                     </div>
                 </section>
 
                 {/* Features */}
                 <section id="features" className="py-20">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold tracking-tight">Todo lo que necesitas para cerrar más rápido</h2>
-                        <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">Desde la creación hasta la firma, Proposa optimiza cada paso del proceso de ventas.</p>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {features.map(feature => (
-                            <SpotlightCard key={feature.name}>
-                                <Icon name={feature.icon} className="w-8 h-8 text-purple-400 mb-4" />
-                                <h3 className="font-semibold text-lg text-foreground mb-2">{feature.name}</h3>
-                                <p className="text-sm text-muted-foreground">{feature.description}</p>
-                            </SpotlightCard>
-                        ))}
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-12">
+                            <h2 className="text-4xl font-bold tracking-tight">Todo lo que necesitas para cerrar más rápido</h2>
+                            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">Desde la creación hasta la firma, Proposa optimiza cada paso del proceso de ventas.</p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {features.map(feature => (
+                                <SpotlightCard key={feature.name}>
+                                    <Icon name={feature.icon} className="w-8 h-8 text-purple-400 mb-4" />
+                                    <h3 className="font-semibold text-lg text-foreground mb-2">{feature.name}</h3>
+                                    <p className="text-sm text-muted-foreground">{feature.description}</p>
+                                </SpotlightCard>
+                            ))}
+                        </div>
                     </div>
                 </section>
 
                 {/* Pricing */}
                 <section id="pricing" className="py-20">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold tracking-tight">Un plan para cada equipo</h2>
-                        <p className="mt-4 text-muted-foreground">Empieza gratis y escala a medida que creces.</p>
-                        <div className="mt-6">
-                            <PricingToggle currency={currency} setCurrency={setCurrency as (c: 'dop' | 'usd') => void} />
+                     <div className="container mx-auto px-6">
+                        <div className="text-center mb-12">
+                            <h2 className="text-4xl font-bold tracking-tight">Un plan para cada equipo</h2>
+                            <p className="mt-4 text-muted-foreground">Empieza gratis y escala a medida que creces.</p>
+                            <div className="mt-6">
+                                <PricingToggle currency={currency} setCurrency={setCurrency as (c: 'dop' | 'usd') => void} />
+                            </div>
                         </div>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        {(pricingPlans[currency]).map(plan => (
-                             <SpotlightCard key={plan.name} className={`flex flex-col ${plan.isFeatured ? 'border-purple-400' : ''}`}>
-                                <h3 className="text-lg font-semibold">{plan.name}</h3>
-                                <p className="text-4xl font-bold my-4">{plan.price !== 'Contactar' && (currency === 'dop' ? 'RD$' : '$')}{plan.price}</p>
-                                <ul className="space-y-3 text-muted-foreground flex-grow">
-                                    {plan.features.map(feature => <li key={feature} className="flex items-start"><Icon name="Check" className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />{feature}</li>)}
-                                </ul>
-                                <button className={`btn w-full mt-8 py-2 ${plan.isFeatured ? 'btn-primary' : 'btn-secondary'}`}>{plan.cta}</button>
-                            </SpotlightCard>
-                        ))}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                            {(pricingPlans[currency]).map(plan => (
+                                <SpotlightCard key={plan.name} className={`flex flex-col ${plan.isFeatured ? 'border-purple-400' : ''}`}>
+                                    <h3 className="text-lg font-semibold">{plan.name}</h3>
+                                    <p className="text-4xl font-bold my-4">{plan.price !== 'Contactar' && (currency === 'dop' ? 'RD$' : '$')}{plan.price}</p>
+                                    <ul className="space-y-3 text-muted-foreground flex-grow">
+                                        {plan.features.map(feature => <li key={feature} className="flex items-start"><Icon name="Check" className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />{feature}</li>)}
+                                    </ul>
+                                    <button className={`btn w-full mt-8 py-2 ${plan.isFeatured ? 'btn-primary' : 'btn-secondary'}`}>{plan.cta}</button>
+                                </SpotlightCard>
+                            ))}
+                        </div>
                     </div>
                 </section>
 
                  {/* FAQ */}
-                <section className="py-20 max-w-3xl mx-auto">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold tracking-tight">Preguntas Frecuentes</h2>
-                    </div>
-                    <div>
-                        {faqItems.map(item => <FaqItem key={item.q} q={item.q} a={item.a} />)}
+                <section className="py-20">
+                    <div className="container mx-auto px-6 max-w-3xl">
+                        <div className="text-center mb-12">
+                            <h2 className="text-4xl font-bold tracking-tight">Preguntas Frecuentes</h2>
+                        </div>
+                        <div>
+                            {faqItems.map(item => <FaqItem key={item.q} q={item.q} a={item.a} />)}
+                        </div>
                     </div>
                 </section>
 
                 {/* Final CTA */}
-                <section className="py-20 text-center">
-                    <h2 className="text-4xl font-bold tracking-tight">Envía tu próxima propuesta en 5 minutos.</h2>
-                    <div className="mt-8">
-                        <button onClick={() => navigate(AppView.REGISTER)} className="btn btn-primary px-8 py-4 text-lg">Crear cuenta gratis</button>
+                <section className="py-20">
+                    <div className="container mx-auto px-6 text-center">
+                        <h2 className="text-4xl font-bold tracking-tight">Envía tu próxima propuesta en 5 minutos.</h2>
+                        <div className="mt-8">
+                            <button onClick={() => navigate(AppView.REGISTER)} className="btn btn-primary px-8 py-4 text-lg">Crear cuenta gratis</button>
+                        </div>
                     </div>
                 </section>
             </main>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { Theme, AppView, Proposal, ProposalStatus } from '../../types';
 import { useAppContext } from '../../contexts/AppContext';
@@ -157,8 +156,8 @@ const ThemeEditor: React.FC<ThemeEditorProps> = ({ theme: themeProp }) => {
                          <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">Encabezados</label>
                             <select value={theme.fonts.heading} onChange={e => handleFontChange('heading', e.target.value)} className="w-full p-2 border border-slate-300 rounded-md">
+                                <option value="var(--font-sans)">Plus Jakarta Sans</option>
                                 <option value="var(--font-serif)">Playfair Display</option>
-                                <option value="var(--font-sans)">Inter</option>
                                 <option value="var(--font-poppins)">Poppins</option>
                                 <option value="var(--font-lora)">Lora</option>
                             </select>
@@ -166,8 +165,8 @@ const ThemeEditor: React.FC<ThemeEditorProps> = ({ theme: themeProp }) => {
                          <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">Cuerpo del Texto</label>
                              <select value={theme.fonts.body} onChange={e => handleFontChange('body', e.target.value)} className="w-full p-2 border border-slate-300 rounded-md">
+                                <option value="var(--font-sans)">Plus Jakarta Sans</option>
                                 <option value="var(--font-serif)">Playfair Display</option>
-                                <option value="var(--font-sans)">Inter</option>
                                 <option value="var(--font-poppins)">Poppins</option>
                                 <option value="var(--font-lora)">Lora</option>
                             </select>

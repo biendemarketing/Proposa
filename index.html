@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Playfair+Display:wght@400;700&family=Poppins:wght@400;600;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <style>
       :root {
         --background: 0 0% 100%;
@@ -31,7 +31,11 @@
         --input: 214.3 31.8% 91.4%;
         --ring: 222.2 84% 4.9%;
         --radius: 0.5rem;
+
         --font-sans: 'Plus Jakarta Sans', sans-serif;
+        --font-serif: 'Playfair Display', serif;
+        --font-poppins: 'Poppins', sans-serif;
+        --font-lora: 'Lora', serif;
       }
       
       html.dark {
@@ -60,6 +64,10 @@
         font-family: var(--font-sans);
         background-color: hsl(var(--background));
         color: hsl(var(--foreground));
+      }
+
+      .font-serif {
+        font-family: var(--font-serif);
       }
 
       .spotlight-card {
