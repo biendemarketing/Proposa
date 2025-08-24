@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Theme, AppView, Proposal, ProposalStatus } from '../../types';
 import Icon from '../icons/Icon';
@@ -77,7 +76,7 @@ const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onSetDefault }) => {
                  <div className="flex-grow"></div>
                 <div className="flex items-center space-x-1">
                     <button onClick={() => setIsPreviewOpen(true)} className="p-2 text-slate-400 hover:text-slate-700" title="Vista Previa"><Icon name="Eye" className="w-4 h-4" /></button>
-                    <button onClick={() => navigate(AppView.THEME_EDITOR, theme)} className="p-2 text-slate-400 hover:text-slate-700" title="Editar"><Icon name="FileText" className="w-4 h-4" /></button>
+                    <button onClick={() => navigate(AppView.THEME_EDITOR, theme)} className="p-2 text-slate-400 hover:text-slate-700" title="Editar"><Icon name="EditSquare" className="w-4 h-4" /></button>
                     <button className="p-2 text-slate-400 hover:text-red-500" title="Eliminar"><Icon name="Trash2" className="w-4 h-4" /></button>
                 </div>
             </div>

@@ -1,14 +1,14 @@
-
 import React, { useState, useMemo } from 'react';
-import { mockClients, mockProposals } from '../../data/mockData';
+import { mockProposals } from '../../data/mockData';
 import { Client } from '../../types';
 import Icon from '../icons/Icon';
 import Card from '../ui/Card';
 import ClientCard from './ClientCard';
 import ClientModal from './ClientModal';
+import { useAppContext } from '../../contexts/AppContext';
 
 const Clients: React.FC = () => {
-    const [clients, setClients] = useState<Client[]>(mockClients);
+    const { clients, addClient, updateClient, deleteClient } = useAppContext();
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingClient, setEditingClient] = useState<Client | null>(null);
@@ -31,17 +31,17 @@ const Clients: React.FC = () => {
     };
 
     const handleSaveClient = (client: Client) => {
-        if (editingClient) {
-            setClients(clients.map(c => c.id === client.id ? client : c));
+        if (clients.some(c => c.id === client.id)) {
+            updateClient(client);
         } else {
-            setClients([...clients, client]);
+            addClient(client);
         }
         handleCloseModal();
     };
 
     const handleDeleteClient = (clientId: number) => {
         if (window.confirm('¿Estás seguro de que quieres eliminar este cliente? Esto no eliminará sus propuestas.')) {
-            setClients(clients.filter(c => c.id !== clientId));
+            deleteClient(clientId);
         }
     };
 

@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { mockProposals, mockClients } from '../../data/mockData';
 import { Proposal, ProposalStatus, AppView } from '../../types';
@@ -111,7 +110,7 @@ const ProposalList: React.FC = () => {
                                         <div className="flex items-center justify-end space-x-1">
                                             <button onClick={() => p.publicLink && navigate(`public:${p.publicLink}`)} className="p-2 text-slate-500 hover:text-indigo-600" title="Vista Pública"><Icon name="ExternalLink" className="w-5 h-5" /></button>
                                             <button onClick={() => navigate(AppView.PROPOSAL_ANALYTICS, p.id)} className="p-2 text-slate-500 hover:text-indigo-600" title="Analíticas"><Icon name="BarChart" className="w-5 h-5" /></button>
-                                            <button onClick={() => navigate(AppView.PROPOSAL_EDITOR, p)} className="p-2 text-slate-500 hover:text-indigo-600" title="Editar"><Icon name="FileText" className="w-5 h-5" /></button>
+                                            <button onClick={() => navigate(AppView.PROPOSAL_EDITOR, p)} className="p-2 text-slate-500 hover:text-indigo-600" title="Editar"><Icon name="EditSquare" className="w-5 h-5" /></button>
                                             <button onClick={() => handleDelete(p.id)} className="p-2 text-slate-500 hover:text-red-600" title="Eliminar"><Icon name="Trash2" className="w-5 h-5" /></button>
                                         </div>
                                     </td>

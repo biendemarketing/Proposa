@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Client, Proposal } from '../../types';
 import Icon from '../icons/Icon';
@@ -32,7 +31,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ client, proposals, onEdit, onDe
                 </div>
                 <div className="flex items-center space-x-1">
                     <button onClick={() => onEdit(client)} className="p-2 text-slate-400 hover:text-indigo-600" title="Editar Cliente">
-                        <Icon name="Edit" className="w-4 h-4" />
+                        <Icon name="EditSquare" className="w-4 h-4" />
                     </button>
                     <button onClick={() => onDelete(client.id)} className="p-2 text-slate-400 hover:text-red-500" title="Eliminar Cliente">
                         <Icon name="Trash2" className="w-4 h-4" />

@@ -1,11 +1,11 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
-import { mockClients, mockThemes } from '../../data/mockData';
-import { Proposal, ProposalBlock, BlockType, LineItem, AppView, ProposalStatus, BlockContent, TwoColumnItem, FeatureItem, TextWithImageItem, IncludedItem, Template, IconCardItem, ProductCategoryItem, PromoBannerItem, PortfolioItem, GalleryImage, PriceListItem, PriceTablePackage, DarkFooterItem } from '../../types';
+import { mockThemes, mockTemplates } from '../../data/mockData';
+import { Proposal, ProposalBlock, BlockType, AppView, ProposalStatus, BlockContent, TwoColumnItem, FeatureItem, TextWithImageItem, IncludedItem, Template, IconCardItem, ProductCategoryItem, PromoBannerItem, PortfolioItem, GalleryImage, PriceListItem, PriceTablePackage, DarkFooterItem, Client } from '../../types';
 import Icon, { ICONS } from '../icons/Icon';
 import { generateProposalSection } from '../../services/geminiService';
 import { useAppContext } from '../../contexts/AppContext';
 import PublicProposalView from './PublicProposalView';
+import ClientModal from '../clients/ClientModal';
 
 interface ContentEditorProps {
     proposal?: Proposal;
@@ -126,15 +126,18 @@ const BlockEditorWrapper: React.FC<{ title: string; blockId: string; onDelete: (
 );
 
 const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, template: templateProp }) => {
-    const { navigate, view } = useAppContext();
+    const { navigate, view, clients, addClient } = useAppContext();
     const isTemplateMode = templateProp !== undefined || view === AppView.TEMPLATE_EDITOR;
 
     const [title, setTitle] = useState('');
     const [blocks, setBlocks] = useState<ProposalBlock[]>([]);
-    const [selectedClient, setSelectedClient] = useState(mockClients[0].id);
+    const [selectedClient, setSelectedClient] = useState(clients[0]?.id || 0);
     const [selectedThemeId, setSelectedThemeId] = useState(mockThemes.find(t => t.isDefault)?.id || 1);
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
+    
+    const [isClientModalOpen, setIsClientModalOpen] = useState(false);
+    const [templateSelectorVisible, setTemplateSelectorVisible] = useState(!proposalProp && !isTemplateMode);
 
     useEffect(() => {
         if (isTemplateMode) {
@@ -145,10 +148,10 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
         } else {
             setTitle(proposalProp?.title || 'Nueva Propuesta');
             setBlocks(proposalProp?.blocks || []);
-            setSelectedClient(proposalProp?.clientId || mockClients[0].id);
+            setSelectedClient(proposalProp?.clientId || (clients[0]?.id || 0));
             setSelectedThemeId(proposalProp?.themeId || (mockThemes.find(t => t.isDefault)?.id || 1));
         }
-    }, [proposalProp, templateProp, isTemplateMode]);
+    }, [proposalProp, templateProp, isTemplateMode, clients]);
     
     const [isAiModalOpen, setIsAiModalOpen] = useState(false);
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -157,6 +160,19 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
     const openIconPicker = (onSelect: (iconName: string) => void) => {
         setIconPickerState({ isOpen: true, onSelect });
     };
+    
+    const handleSaveNewClient = (client: Client) => {
+        addClient(client);
+        setSelectedClient(client.id);
+        setIsClientModalOpen(false);
+    };
+
+    const applyTemplate = (template: Template) => {
+        setTitle(template.title);
+        setBlocks(JSON.parse(JSON.stringify(template.blocks))); // deep copy
+        setTemplateSelectorVisible(false);
+    };
+
 
     const currentContentState = useMemo(() => {
         if (isTemplateMode) {
@@ -189,6 +205,7 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
     };
 
     const addBlock = (type: BlockType) => {
+        setTemplateSelectorVisible(false);
         const newBlock: ProposalBlock = { id: `block-${Date.now()}`, type, content: {} };
         // Add default content for each block type to avoid undefined issues
         switch(type) {
@@ -582,6 +599,7 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
 
     return (
         <div className="max-w-4xl mx-auto">
+            {isClientModalOpen && <ClientModal client={null} onClose={() => setIsClientModalOpen(false)} onSave={handleSaveNewClient} />}
             {isAiModalOpen && <AiGenerateModal onGenerate={() => {}} onClose={() => setIsAiModalOpen(false)} />}
             {isPreviewOpen && <PreviewModal content={currentContentState} onClose={() => setIsPreviewOpen(false)} />}
             {iconPickerState.isOpen && <IconPickerModal onSelect={iconPickerState.onSelect} onClose={() => setIconPickerState({ isOpen: false, onSelect: () => {} })} />}
@@ -612,31 +630,52 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
                         <EditorInput label="Categoría" value={category} onChange={e => setCategory(e.target.value)} placeholder="Ej: Marketing" />
                      </div>
                  ) : (
-                     <div className="flex flex-wrap items-center gap-x-6 gap-y-4 pb-4 border-b">
-                        <div className="flex items-center">
-                            <label htmlFor="client" className="font-semibold text-slate-700 mr-2">Cliente:</label>
+                     <div className="space-y-4 pb-4 border-b">
+                        <div className="flex items-center flex-wrap gap-4">
+                            <label htmlFor="client" className="font-semibold text-slate-700">Cliente:</label>
                             <select
                                 id="client"
                                 value={selectedClient}
                                 onChange={(e) => setSelectedClient(Number(e.target.value))}
-                                className="border border-slate-300 rounded-lg py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-slate-800"
+                                className="border border-slate-300 rounded-lg py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-slate-800 flex-grow"
                             >
-                                {mockClients.map(c => <option key={c.id} value={c.id}>{c.company}</option>)}
+                                {clients.map(c => <option key={c.id} value={c.id}>{c.company}</option>)}
                             </select>
+                            <button onClick={() => setIsClientModalOpen(true)} className="flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                                <Icon name="UserPlus" className="w-4 h-4 mr-1" />
+                                Nuevo
+                            </button>
                         </div>
-                         <div className="flex items-center">
-                            <label htmlFor="theme" className="font-semibold text-slate-700 mr-2">Tema:</label>
-                            <select
-                                id="theme"
-                                value={selectedThemeId}
-                                onChange={(e) => setSelectedThemeId(Number(e.target.value))}
-                                className="border border-slate-300 rounded-lg py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-slate-800"
-                            >
-                                {mockThemes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
-                            </select>
+                         <div>
+                            <label className="font-semibold text-slate-700 mb-2 block">Tema:</label>
+                            <div className="flex items-center gap-3 flex-wrap">
+                                {mockThemes.map(t => {
+                                     const bgStyle = t.colors.backgroundType === 'gradient' ? { background: t.colors.backgroundGradient } : { backgroundColor: t.colors.background };
+                                    return (
+                                        <button key={t.id} onClick={() => setSelectedThemeId(t.id)} className={`w-10 h-10 rounded-full focus:outline-none transition-transform transform hover:scale-110 ${selectedThemeId === t.id ? 'ring-2 ring-offset-2 ring-indigo-500' : 'ring-1 ring-slate-200'}`} style={bgStyle} title={t.name}>
+                                            <div className="w-4 h-4 rounded-full m-1" style={{backgroundColor: t.colors.primary}}></div>
+                                        </button>
+                                    )
+                                })}
+                            </div>
                         </div>
                      </div>
                  )}
+
+                {templateSelectorVisible && (
+                    <div className="my-6">
+                        <h3 className="text-lg font-semibold text-slate-800 mb-3">Empezar desde una Plantilla</h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            {mockTemplates.map(template => (
+                                <div key={template.id} className="border rounded-lg p-4 text-center hover:shadow-lg hover:border-indigo-300 cursor-pointer transition-all" onClick={() => applyTemplate(template)}>
+                                    <Icon name="LayoutTemplate" className="w-8 h-8 mx-auto text-indigo-500 mb-2"/>
+                                    <p className="font-semibold text-sm">{template.title}</p>
+                                    <p className="text-xs text-slate-500">{template.category}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             
                 {blocks.map(block => <div key={block.id}>{renderBlockEditor(block)}</div>)}
             
