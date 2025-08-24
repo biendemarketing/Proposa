@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { mockThemes } from '../../data/mockData';
 import { Theme, AppView } from '../../types';
@@ -19,7 +18,7 @@ const ThemeList: React.FC = () => {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-800 font-serif">Temas</h1>
+                    <h1 className="text-3xl font-bold text-slate-800">Temas</h1>
                     <p className="text-slate-500 mt-1">Define y gestiona la apariencia de tus propuestas.</p>
                 </div>
                  <button

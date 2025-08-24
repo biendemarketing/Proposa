@@ -39,7 +39,7 @@ export const mockThemes: Theme[] = [
             backgroundType: 'solid',
         },
         fonts: {
-            heading: 'var(--font-serif)',
+            heading: 'var(--font-sans)',
             body: 'var(--font-sans)',
         }
     },
@@ -56,7 +56,7 @@ export const mockThemes: Theme[] = [
             backgroundType: 'solid',
         },
         fonts: {
-            heading: 'var(--font-poppins)',
+            heading: 'var(--font-sans)',
             body: 'var(--font-sans)',
         }
     },
@@ -72,8 +72,8 @@ export const mockThemes: Theme[] = [
             backgroundType: 'solid',
         },
         fonts: {
-            heading: 'var(--font-serif)',
-            body: 'var(--font-lora)',
+            heading: 'var(--font-sans)',
+            body: 'var(--font-sans)',
         }
     },
     {
@@ -89,7 +89,7 @@ export const mockThemes: Theme[] = [
             backgroundGradient: 'linear-gradient(to right, #2193b0, #6dd5ed)',
         },
         fonts: {
-            heading: 'var(--font-poppins)',
+            heading: 'var(--font-sans)',
             body: 'var(--font-sans)',
         }
     },
@@ -106,8 +106,8 @@ export const mockThemes: Theme[] = [
             backgroundGradient: 'linear-gradient(to right, #ffecd2 0%, #fcb69f 100%)',
         },
         fonts: {
-            heading: 'var(--font-serif)',
-            body: 'var(--font-lora)',
+            heading: 'var(--font-sans)',
+            body: 'var(--font-sans)',
         }
     }
 ];

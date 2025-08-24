@@ -57,7 +57,7 @@ const Notifications: React.FC = () => {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-800 font-serif">Notificaciones</h1>
+                    <h1 className="text-3xl font-bold text-slate-800">Notificaciones</h1>
                     <p className="text-slate-500 mt-1">Revisa todas tus alertas y actualizaciones.</p>
                 </div>
                 <button

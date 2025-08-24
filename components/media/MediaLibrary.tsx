@@ -24,7 +24,7 @@ const MediaLibrary: React.FC = () => {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-800 font-serif">Medios</h1>
+                    <h1 className="text-3xl font-bold text-slate-800">Medios</h1>
                     <p className="text-slate-500 mt-1">Gestiona todos tus archivos e imágenes.</p>
                 </div>
                 <button className="flex items-center bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-sm w-full sm:w-auto">

@@ -50,7 +50,7 @@ const Clients: React.FC = () => {
             {isModalOpen && <ClientModal client={editingClient} onClose={handleCloseModal} onSave={handleSaveClient} />}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-800 font-serif">Clientes</h1>
+                    <h1 className="text-3xl font-bold text-slate-800">Clientes</h1>
                     <p className="text-slate-500 mt-1">Gestiona todos tus contactos y clientes.</p>
                 </div>
                 <button

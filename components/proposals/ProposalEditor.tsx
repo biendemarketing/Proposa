@@ -282,7 +282,7 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
                     </div>
                 </BlockEditorWrapper>;
             case BlockType.SECTION_HEADER:
-                 return <div className="relative group p-2"><input type="text" placeholder="Encabezado de Sección" value={block.content.text || ''} onChange={(e) => updateBlockContent(block.id, { text: e.target.value })} className="text-2xl font-bold w-full border-none focus:ring-0 p-2 text-center font-serif text-yellow-600 bg-transparent" /><button onClick={() => deleteBlock(block.id)} className="absolute top-2 right-2 p-1 opacity-0 group-hover:opacity-100"><Icon name="Trash2" className="w-4 h-4 text-red-500" /></button></div>;
+                 return <div className="relative group p-2"><input type="text" placeholder="Encabezado de Sección" value={block.content.text || ''} onChange={(e) => updateBlockContent(block.id, { text: e.target.value })} className="text-2xl font-bold w-full border-none focus:ring-0 p-2 text-center text-yellow-600 bg-transparent" /><button onClick={() => deleteBlock(block.id)} className="absolute top-2 right-2 p-1 opacity-0 group-hover:opacity-100"><Icon name="Trash2" className="w-4 h-4 text-red-500" /></button></div>;
             case BlockType.TEXT:
                  return <BlockEditorWrapper title="Texto" blockId={block.id} onDelete={deleteBlock}>
                     <EditorTextarea label="Contenido de Texto" value={block.content.text || ''} onChange={(e) => updateBlockContent(block.id, { text: e.target.value })} rows={6} />
@@ -609,7 +609,7 @@ const ProposalEditor: React.FC<ContentEditorProps> = ({ proposal: proposalProp, 
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="text-2xl sm:text-3xl font-bold text-slate-800 border-none focus:ring-0 p-0 bg-transparent font-serif w-full"
+                    className="text-2xl sm:text-3xl font-bold text-slate-800 border-none focus:ring-0 p-0 bg-transparent w-full"
                     placeholder={isTemplateMode ? 'Título de la Plantilla' : 'Título de la Propuesta'}
                 />
                 <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">

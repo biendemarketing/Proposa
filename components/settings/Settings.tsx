@@ -41,7 +41,7 @@ const Settings: React.FC<SettingsProps> = ({ initialTab = 'profile' }) => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold text-slate-800 font-serif">Configuración</h1>
+                <h1 className="text-3xl font-bold text-slate-800">Configuración</h1>
                 <p className="text-slate-500 mt-1">Gestiona tu cuenta y la configuración de tu organización.</p>
             </div>
             <div className="flex space-x-1 sm:space-x-2 border-b border-slate-200 pb-2 overflow-x-auto">

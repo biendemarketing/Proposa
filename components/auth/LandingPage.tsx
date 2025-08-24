@@ -61,6 +61,7 @@ const PricingToggle: React.FC<{ currency: string; setCurrency: (c: 'dop' | 'usd'
 const LandingPage: React.FC = () => {
     const { navigate, theme, toggleTheme } = useAppContext();
     const [currency, setCurrency] = useState<'dop' | 'usd'>('dop');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const hero = {
         h1_line1: "Crea Propuestas",
@@ -123,9 +124,24 @@ const LandingPage: React.FC = () => {
                         <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-muted">
                            <Icon name={theme === 'dark' ? 'Sun' : 'Moon'} className="w-5 h-5 text-muted-foreground" />
                         </button>
-                        <button onClick={() => navigate(AppView.LOGIN)} className="font-semibold text-foreground">Login</button>
+                        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 rounded-full hover:bg-muted" aria-label="Toggle menu">
+                            <Icon name={isMenuOpen ? 'X' : 'Menu'} className="w-6 h-6 text-muted-foreground" />
+                        </button>
                     </div>
                 </div>
+                 {/* Mobile Menu */}
+                {isMenuOpen && (
+                    <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-slate-950 border-b border-border py-4 animate-fade-in-down">
+                        <nav className="container mx-auto px-6 flex flex-col items-center space-y-4">
+                            <a href="#features" onClick={() => setIsMenuOpen(false)} className="text-muted-foreground hover:text-foreground">Funcionalidades</a>
+                            <a href="#pricing" onClick={() => setIsMenuOpen(false)} className="text-muted-foreground hover:text-foreground">Precios</a>
+                            <a href="#" onClick={(e) => { e.preventDefault(); navigate(AppView.LOGIN); setIsMenuOpen(false); }} className="font-semibold text-foreground">Login</a>
+                            <button onClick={() => { navigate(AppView.REGISTER); setIsMenuOpen(false); }} className="btn btn-primary px-4 py-2 w-full max-w-xs">
+                                Empieza gratis
+                            </button>
+                        </nav>
+                    </div>
+                )}
             </header>
 
             <main>
@@ -138,7 +154,7 @@ const LandingPage: React.FC = () => {
                                 <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-purple-500/30 rounded-full filter blur-3xl opacity-50 animate-[blob_12s_infinite_4s]"></div>
                             </div>
                         )}
-                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground">
+                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">
                             {hero.h1_line1} <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">{hero.h1_line2}</span>
                         </h1>
