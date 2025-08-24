@@ -231,9 +231,9 @@ export interface Client {
     id: number;
     name: string;
     company: string;
-    email?: string;
-    phone?: string;
-    notes?: string;
+    email: string;
+    phone: string;
+    notes: string;
 }
 
 export interface ThemeColors {

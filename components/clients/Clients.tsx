@@ -1,19 +1,17 @@
+
 import React, { useState, useMemo } from 'react';
+import { mockClients, mockProposals } from '../../data/mockData';
 import { Client } from '../../types';
 import Icon from '../icons/Icon';
 import Card from '../ui/Card';
 import ClientCard from './ClientCard';
-import { mockProposals } from '../../data/mockData';
-import { useAppContext } from '../../contexts/AppContext';
+import ClientModal from './ClientModal';
 
-interface ClientsProps {
-    clients: Client[];
-    onDelete: (clientId: number) => void;
-}
-
-const Clients: React.FC<ClientsProps> = ({ clients, onDelete }) => {
-    const { setClientModalOpen, setEditingClient } = useAppContext();
+const Clients: React.FC = () => {
+    const [clients, setClients] = useState<Client[]>(mockClients);
     const [searchTerm, setSearchTerm] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingClient, setEditingClient] = useState<Client | null>(null);
 
     const filteredClients = useMemo(() => {
         return clients.filter(client =>
@@ -22,23 +20,41 @@ const Clients: React.FC<ClientsProps> = ({ clients, onDelete }) => {
         );
     }, [clients, searchTerm]);
 
-    const handleEdit = (client: Client) => {
+    const handleOpenModal = (client: Client | null = null) => {
         setEditingClient(client);
-        setClientModalOpen(true);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setEditingClient(null);
+        setIsModalOpen(false);
+    };
+
+    const handleSaveClient = (client: Client) => {
+        if (editingClient) {
+            setClients(clients.map(c => c.id === client.id ? client : c));
+        } else {
+            setClients([...clients, client]);
+        }
+        handleCloseModal();
+    };
+
+    const handleDeleteClient = (clientId: number) => {
+        if (window.confirm('¿Estás seguro de que quieres eliminar este cliente? Esto no eliminará sus propuestas.')) {
+            setClients(clients.filter(c => c.id !== clientId));
+        }
     };
 
     return (
         <div className="space-y-6">
+            {isModalOpen && <ClientModal client={editingClient} onClose={handleCloseModal} onSave={handleSaveClient} />}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-slate-800 font-serif">Clientes</h1>
                     <p className="text-slate-500 mt-1">Gestiona todos tus contactos y clientes.</p>
                 </div>
                 <button
-                    onClick={() => {
-                        setEditingClient(null);
-                        setClientModalOpen(true);
-                    }}
+                    onClick={() => handleOpenModal()}
                     className="flex items-center bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-sm w-full sm:w-auto"
                 >
                     <Icon name="Plus" className="w-5 h-5 mr-2" />
@@ -67,8 +83,8 @@ const Clients: React.FC<ClientsProps> = ({ clients, onDelete }) => {
                         key={client.id}
                         client={client}
                         proposals={mockProposals}
-                        onEdit={handleEdit}
-                        onDelete={onDelete}
+                        onEdit={handleOpenModal}
+                        onDelete={handleDeleteClient}
                     />
                 ))}
             </div>
